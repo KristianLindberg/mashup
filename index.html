@@ -2,7 +2,36 @@
 <html>
   <head>
     <title>Mashup</title>
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+      function execute(){
+  var hashtag = document.getElementById("userInput").value;
+  $.ajax({
+    url: 'https://api.instagram.com/v1/tags/' + hashtag +'/media/recent?client_id=ce95cb4e56c146c994457b48a839f6a8',
+    dataType: 'jsonp',
+    success: function(result){
+      for (var x = 0; x < 1; x++){
+        $('body').append("<div>")
+          for (var i = 0; i < 6; i++){
+            var url = result.data[i].images.thumbnail.url;
+            var images = [];
+            images.push(url);
+            var popped = images.pop();
+            $('body').append('<img src="' + popped + '"/>');
+          };
+        $('body').append("</div>")
+      };
+    }
+  });
+};
+    </script>
   </head>
   <body>
+    Search Instagram - displays top 6 pictures pertaining to search entry.:
+  	<form  action= " " name= "form1" id="theform">
+      <input type = "text" id="userInput" maxlength="20">
+      <button type="button" onClick="execute()">Submit</button>
+    </form>
   </body>
 </html>
